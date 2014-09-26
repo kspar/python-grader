@@ -1,4 +1,4 @@
-def fail(msg):
+def fail(message):
     raise AssertionError(message)
 
 def indent(text, spaces):
