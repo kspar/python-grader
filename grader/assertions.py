@@ -1,3 +1,6 @@
+def fail(msg):
+    raise AssertionError(message)
+
 def indent(text, spaces):
     lines = str(text).split("\n")
     return "\n".join(" " * spaces + line for line in lines).rstrip()
