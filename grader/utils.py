@@ -21,6 +21,8 @@ def is_function(value):
     except:
         return False
 
+def quote_text_block(text):
+    return "\n>" + text.replace("\n", "\n>")
 
 ## Function descriptions
 def beautifyDescription(description):
@@ -51,9 +53,9 @@ def dump_json(ordered_dict):
     " Dumps the dict to a string, indented "
     return json.dumps(ordered_dict, indent=4)
 
-def extract_numbers(s, decimal_comma=True):
+def extract_numbers(s, allow_decimal_comma=True):
     result = []
-    if decimal_comma:
+    if allow_decimal_comma:
         rexp = """((?:\+|\-)?\d+(?:(?:\.|,)\d+)?)"""
     else:
         rexp = """((?:\+|\-)?\d+(?:\.\d+)?)"""
@@ -67,6 +69,18 @@ def extract_numbers(s, decimal_comma=True):
             except:
                 pass
     return result
+
+def contains_number(num_list_or_str, x, allowed_error=0, allow_decimal_comma=True):
+    if isinstance(num_list_or_str, str):
+        nums = extract_numbers(num_list_or_str, allow_decimal_comma)
+    else:
+        nums = num_list_or_str
+    
+    for num in nums:
+        if abs(num - x) <= allowed_error:
+            return True
+    
+    return False
 
 def get_error_message(exception):
     type_ = type(exception)
