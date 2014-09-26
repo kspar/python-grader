@@ -3,6 +3,7 @@
 """
 import json
 import traceback
+import re
 
 
 def import_module(path, name=None):
@@ -50,6 +51,22 @@ def dump_json(ordered_dict):
     " Dumps the dict to a string, indented "
     return json.dumps(ordered_dict, indent=4)
 
+def extract_numbers(s, decimal_comma=True):
+    result = []
+    if decimal_comma:
+        rexp = """((?:\+|\-)?\d+(?:(?:\.|,)\d+)?)"""
+    else:
+        rexp = """((?:\+|\-)?\d+(?:\.\d+)?)"""
+        
+    for item in re.findall(rexp, s):
+        try:
+            result.append(int(item))
+        except:
+            try:
+                result.append(float(item.replace(",", ".")))
+            except:
+                pass
+    return result
 
 def get_error_message(exception):
     type_ = type(exception)
