@@ -88,7 +88,8 @@ def show_moodle_grade(points, max_points):
 if __name__ == '__main__':
     if len(sys.argv) == 2 or len(sys.argv) == 3:
         points, max_points = run_test_suite(*sys.argv[1:])
-        show_moodle_grade(points, max_points)
+        # TODO: introduce cmd-line parameter for suppressing grade
+        #show_moodle_grade(points, max_points)
     else:
         points, max_points = run_all_test_suites()
         # TODO: Can't detect max_points when some testers are not run
