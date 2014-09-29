@@ -1,4 +1,5 @@
 import grader
+from grader.utils import quote_text_block
 import os.path
 import traceback
 import sys
@@ -19,7 +20,8 @@ def format_result(r, filename=None):
     error_message = ""
     if not r["success"]:
         error_message += "\n" + r["error_message"].replace("AssertionError: ", "")
-        
+        if "AssertionError:" not in r["error_message"]:
+            error_message += "\n\nTäielik veateade:" + quote_text_block(r["traceback"])
     return "{0}{1}".format(title, error_message)
     
 
