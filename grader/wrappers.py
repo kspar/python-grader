@@ -35,15 +35,18 @@ def check_function(function_name, args, expected_result, description=None):
         will before similar to "Check add(1, 2, 3) == 6" """
 
     def f(m):
-        assert hasattr(m, "module"), "Do not use input() in this solution"
         assert hasattr(m.module, function_name), \
-            "Please define the function with name " + function_name
+            "Ei leidnud funktsiooni nimega '{}'".format(function_name)
         function = getattr(m.module, function_name)
-        assertEquals(function(*args), expected_result)
+        actual_result = function(*args) 
+        assert actual_result == expected_result, \
+            "Ootasin tulemust {}, aga funktsioon tagastas {}".format(repr(expected_result),
+                                                                     repr(actual_result))
+            
 
     if description is None:
-        description = "Check " + function_name + \
-            "(" + ", ".join(map(repr, args)) + ") == " + repr(expected_result)
+        description = function_name + \
+            "(" + ", ".join(map(repr, args)) + ")"
     setDescription(f, description)
     return test(f)
 
