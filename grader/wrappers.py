@@ -85,7 +85,7 @@ def test_cases(test_args, description=None, **arg_functions):
     """
 
     if description is None:
-        description = ", ".join(str(i)+"=["+key+"]" for i, value in enumerate(test_args))
+        description = ", ".join(str(i)+"=["+value+"]" for i, value in enumerate(test_args))
 
     def calc_function_kwargs(values):
         out = {}
