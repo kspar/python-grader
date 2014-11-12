@@ -70,15 +70,14 @@ def run_all_test_suites():
     points = 0
     max_points = 0
 
-    files = sorted(os.listdir("."))
+    files = sorted([f for f in os.listdir(".") if f.endswith(TESTER_MARKER + ".py") or f == "tester.py"])
     for file in files:
-        if file.endswith(TESTER_MARKER + ".py") or file == "tester.py":
-            p, mp = run_test_suite(file, show_filename=len(files) > 1)
-            points += p
-            max_points += mp
+        p, mp = run_test_suite(file, show_filename=len(files) > 1)
+        points += p
+        max_points += mp
 
-            # make it easier to distinguish separate test suites
-            print(60 * "#")
+        # make it easier to distinguish separate test suites
+        print(60 * "#")
     
     return points, max_points
 
@@ -101,5 +100,4 @@ if __name__ == '__main__':
         # TODO: Can't detect max_points when some testers are not run
         # because user hasn't submitted the solution file
                     
-
 
