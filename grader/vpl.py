@@ -27,8 +27,11 @@ def format_result(r, filename=None):
 
 def run_test_suite(tester_file, solution_file=None, show_filename=False):
     if solution_file == None:
-        solution_file = tester_file.replace(TESTER_MARKER, "")
-    
+        if tester_file == "tester.py":
+            solution_file = os.environ.get("VPL_SUBFILE0")
+        else:
+            solution_file = tester_file.replace(TESTER_MARKER, "")
+
     points = 0
     max_points = 0
     
@@ -66,10 +69,11 @@ def run_test_suite(tester_file, solution_file=None, show_filename=False):
 def run_all_test_suites():
     points = 0
     max_points = 0
-    
-    for file in sorted(os.listdir(".")):
-        if file.endswith(TESTER_MARKER + ".py"):
-            p, mp = run_test_suite(file, show_filename=True)
+
+    files = sorted(os.listdir("."))
+    for file in files:
+        if file.endswith(TESTER_MARKER + ".py") or file == "tester.py":
+            p, mp = run_test_suite(file, show_filename=len(files) > 1)
             points += p
             max_points += mp
 
@@ -97,4 +101,5 @@ if __name__ == '__main__':
         # TODO: Can't detect max_points when some testers are not run
         # because user hasn't submitted the solution file
                     
+
 
