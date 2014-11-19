@@ -65,7 +65,7 @@ def set_description(d):
 
 
 ## File creation, deletion hooks
-def create_file(filename, contents=""):
+def create_file(filename, contents="", encoding="utf-8"):
     """ Hook for creating files before a test.
 
         Example usage::
@@ -83,7 +83,7 @@ def create_file(filename, contents=""):
         contents = "\n".join(map(str, contents))
 
     def _inner(info):
-        with open(filename, "w") as f:
+        with open(filename, "w", encoding=encoding) as f:
             f.write(contents)
 
     return _inner
@@ -112,7 +112,7 @@ def delete_file(filename):
     return _inner
 
 
-def create_temporary_file(filename, contents=""):
+def create_temporary_file(filename, contents="", encoding="utf-8"):
     """ Decorator for constructing a file which is available
         during a single test and is deleted afterwards.
 
@@ -126,7 +126,7 @@ def create_temporary_file(filename, contents=""):
         """
 
     def _inner(test_function):
-        before_test(create_file(filename, contents))(test_function)
+        before_test(create_file(filename, contents, encoding))(test_function)
         after_test(delete_file(filename))(test_function)
         return test_function
     return _inner
