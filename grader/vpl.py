@@ -39,6 +39,8 @@ def run_test_suite(tester_file, solution_file=None, show_filename=False):
         try:
             grader_result = grader.test_module(tester_file, solution_file)
             #pprint(grader_result)
+            if not grader_result["results"]:
+                print("Probleem testmimisel:", grader_result)
         
             for r in grader_result["results"]:
                 print("<|--")
