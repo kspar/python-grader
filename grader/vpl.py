@@ -29,6 +29,7 @@ def run_test_suite(tester_file, solution_file=None, show_filename=False):
     if solution_file == None:
         if tester_file == "tester.py":
             solution_file = os.environ.get("VPL_SUBFILE0")
+            assert solution_file, "$VPL_SUBFILE0 is not defined"
         else:
             solution_file = tester_file.replace(TESTER_MARKER, "")
 
