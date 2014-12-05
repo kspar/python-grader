@@ -4,6 +4,7 @@
 import json
 import traceback
 import re
+import ast
 
 
 def import_module(path, name=None):
@@ -98,3 +99,24 @@ def read_code(path):
     with tokenize.open(path) as sourceFile:
         contents = sourceFile.read()
     return contents
+
+def ast_contains_name(node, name):
+    if isinstance(node, ast.Name) and node.id == name:
+        return True
+    
+    for child in ast.iter_child_nodes(node):
+        if ast_contains_name(child, name):
+            return True
+
+    return False
+
+def ast_contains(node, node_type):
+    if isinstance(node, node_type):
+        return True
+    
+    for child in ast.iter_child_nodes(node):
+        if ast_contains(child, node_type):
+            return True
+
+    return False
+    
