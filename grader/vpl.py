@@ -21,7 +21,7 @@ def format_result(r, filename=None):
     if not r["success"]:
         error_message += "\n" + r["error_message"].replace("AssertionError: ", "")
         if "AssertionError:" not in r["error_message"]:
-            error_message += "\n\nTäielik veateade:" + quote_text_block(r["traceback"])
+            error_message += "\n\nTäielik veateade:" + quote_text_block(r["traceback"] or r["stderr"])
     return "{0}{1}".format(title, error_message)
     
 
