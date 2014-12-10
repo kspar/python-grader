@@ -39,7 +39,7 @@ def run_test_suite(tester_file, solution_file=None, show_filename=False):
     if os.path.exists(solution_file):
         try:
             grader_result = grader.test_module(tester_file, solution_file)
-            #pprint(grader_result)
+            print(grader_result)
             if not grader_result["results"]:
                 print("Probleem testmimisel:", grader_result)
         
