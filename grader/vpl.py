@@ -35,6 +35,7 @@ def run_test_suite(tester_file, solution_file=None, show_filename=False):
 
     points = 0
     max_points = 0
+    file_missing = False
     
     if os.path.exists(solution_file):
         try:
@@ -63,46 +64,64 @@ def run_test_suite(tester_file, solution_file=None, show_filename=False):
             traceback.print_exc()
             print("--|>")
     else:
+        file_missing = True
         print("<|--")
         print("-Ei leidnud faili '" + solution_file + "'")
         print("--|>")
         
     
-    return points, max_points
+    return points, max_points, file_missing
     
 
 def run_all_test_suites():
     points = 0
     max_points = 0
+    missing_files = 0
 
     files = sorted([f for f in os.listdir(".") if f.endswith(TESTER_MARKER + ".py") or f == "tester.py"])
     for file in files:
-        p, mp = run_test_suite(file, show_filename=len(files) > 1)
+        p, mp, missing = run_test_suite(file, show_filename=len(files) > 1)
         points += p
         max_points += mp
 
         # make it easier to distinguish separate test suites
         print(60 * "#")
+
+        if missing:
+            missing_files += 1
     
-    return points, max_points
+    return points, max_points, missing_files
 
 
 def show_moodle_grade(points, max_points):
+    moodle_min_grade = float(os.environ.get("VPL_GRADEMIN", 0))
     moodle_max_grade = float(os.environ.get("VPL_GRADEMAX", 0))
+    moodle_grade = None
+
+    if moodle_min_grade == moodle_max_grade == 0:
+        return
+
+    if moodle_min_grade == 1 and moodle_max_grade == 2:
+        # Arvestatud / mittearvestatud
+        if points == max_points:
+            moodle_grade = 2
+        else:
+            moodle_grade = 1
     
-    if max_points * moodle_max_grade > 0:
+    elif max_points * moodle_max_grade > 0:
         moodle_grade = 1.0 * points / max_points * moodle_max_grade
+
+    if moodle_grade != None:
         print("Grade :=>> {:3.1f}".format(moodle_grade))
 
 
 if __name__ == '__main__':
     if len(sys.argv) == 2 or len(sys.argv) == 3:
         points, max_points = run_test_suite(*sys.argv[1:])
-        # TODO: introduce cmd-line parameter for suppressing grade
-        #show_moodle_grade(points, max_points)
+        show_moodle_grade(points, max_points)
     else:
-        points, max_points = run_all_test_suites()
-        # TODO: Can't detect max_points when some testers are not run
-        # because user hasn't submitted the solution file
+        points, max_points, missing_files = run_all_test_suites()
+        if missing_files == 0:
+            show_moodle_grade(points, max_points)
                     
 
