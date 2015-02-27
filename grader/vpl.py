@@ -47,11 +47,13 @@ def run_test_suite(tester_file, solution_file=None, show_filename=False):
                 print("Probleem testmimisel:", grader_result)
         
             for r in grader_result["results"]:
+                # TODO: should it be r.get("grade", 1.0) ???
+                max_points += grader_result.get("grade", 1.0)
+                if r["success"]:
+                    points += grader_result.get("grade", 1.0)
+                    
                 print("<|--")
                 print(format_result(r, solution_file if show_filename else None))
-                max_points += grader_result.get("grade", 1.0)
-                if grader_result["success"]:
-                    points += grader_result.get("grade", 1.0)
                 print("--|>")
                 # make it easier to distinguish separate tests
                 print()
@@ -104,9 +106,11 @@ def show_moodle_grade(points, max_points):
     if moodle_min_grade == 1 and moodle_max_grade == 2:
         # Arvestatud / mittearvestatud
         if points != max_points:
-            points = 0
+            print("Grade :=>> 0") # Mittearvestatud
+        else:
+            print("Grade :=>> 2") # Arvestatud
     
-    if max_points * moodle_max_grade > 0:
+    elif max_points * moodle_max_grade > 0:
         moodle_grade = 1.0 * points / max_points * moodle_max_grade
         print("Grade :=>> {:3.1f}".format(moodle_grade))
 
