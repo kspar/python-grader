@@ -94,6 +94,7 @@ def run_all_test_suites():
 
 
 def show_moodle_grade(points, max_points):
+    print("Points:", points, ", max_points:", max_points)
     moodle_min_grade = float(os.environ.get("VPL_GRADEMIN", 0))
     moodle_max_grade = float(os.environ.get("VPL_GRADEMAX", 0))
 
