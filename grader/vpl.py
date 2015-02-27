@@ -106,7 +106,7 @@ def show_moodle_grade(points, max_points):
     if moodle_min_grade == 1 and moodle_max_grade == 2:
         # Arvestatud / mittearvestatud
         if points != max_points:
-            print("Grade :=>> 0") # Mittearvestatud
+            print("Grade :=>> 1") # Mittearvestatud
         else:
             print("Grade :=>> 2") # Arvestatud
     
