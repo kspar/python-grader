@@ -96,22 +96,17 @@ def run_all_test_suites():
 def show_moodle_grade(points, max_points):
     moodle_min_grade = float(os.environ.get("VPL_GRADEMIN", 0))
     moodle_max_grade = float(os.environ.get("VPL_GRADEMAX", 0))
-    moodle_grade = None
 
     if moodle_min_grade == moodle_max_grade == 0:
         return
 
     if moodle_min_grade == 1 and moodle_max_grade == 2:
         # Arvestatud / mittearvestatud
-        if points == max_points:
-            moodle_grade = 2
-        else:
-            moodle_grade = 1
+        if points != max_points:
+            points = 0
     
-    elif max_points * moodle_max_grade > 0:
+    if max_points * moodle_max_grade > 0:
         moodle_grade = 1.0 * points / max_points * moodle_max_grade
-
-    if moodle_grade != None:
         print("Grade :=>> {:3.1f}".format(moodle_grade))
 
 
