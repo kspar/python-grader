@@ -121,6 +121,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--assets', nargs='*')
     args = parser.parse_args()
-    points, max_points, missing_files = run_all_test_suites(args.assets)
+    assets = args.assets if args.assets is not None else []
+    points, max_points, missing_files = run_all_test_suites(assets)
     if missing_files == 0:
         show_moodle_grade(points, max_points)
