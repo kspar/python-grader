@@ -14,7 +14,7 @@ DEFAULT_TEST_SETTINGS = {
     # hooks that run after tests
     "post-hooks": (),
     # timeout for function run
-    "timeout": 1.0
+    "timeout": 60.0
 }
 
 SANDBOXES = {
