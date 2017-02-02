@@ -29,7 +29,7 @@ def format_result(r, filename=None):
 
 
 def run_test_suite(tester_file, solution_file=None, asset_files=[], show_filename=False):
-    if solution_file == None:
+    if solution_file is None:
         if tester_file == "tester.py":
             solution_file = os.environ.get("VPL_SUBFILE0")
             assert solution_file, "$VPL_SUBFILE0 is not defined, env is " + str(os.environ)
@@ -76,7 +76,7 @@ def run_test_suite(tester_file, solution_file=None, asset_files=[], show_filenam
     return points, max_points, file_missing
 
 
-def run_all_test_suites(asset_files):
+def run_all_test_suites(solution_file, asset_files):
     points = 0
     max_points = 0
     missing_files = 0
@@ -84,7 +84,7 @@ def run_all_test_suites(asset_files):
     tester_files = sorted(list(filter(lambda fn: fn.endswith(TESTER_MARKER), os.listdir('.'))))
 
     for file in tester_files:
-        p, mp, missing = run_test_suite(file, asset_files=asset_files, show_filename=len(tester_files) > 1)
+        p, mp, missing = run_test_suite(file, solution_file=solution_file, asset_files=asset_files, show_filename=len(tester_files) > 1)
         points += p
         max_points += mp
 
@@ -116,12 +116,21 @@ def show_moodle_grade(points, max_points):
         moodle_grade = 1.0 * points / max_points * moodle_max_grade
         print("Grade :=>> {:3.1f}".format(moodle_grade))
 
+def empty_file(filename):
+    with open(filename, mode='w', encoding='utf-8') as f:
+        f.write("")
+    return filename
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--assets', nargs='*')
+    parser.add_argument('--assets', nargs='*', default=[])
+    parser.add_argument('--solution-file', nargs='?')
+    parser.add_argument('--no-solution-file', action='store_true')
     args = parser.parse_args()
-    assets = args.assets if args.assets is not None else []
-    points, max_points, missing_files = run_all_test_suites(assets)
+
+    solution_file = args.solution_file
+    if args.no_solution_file:
+        solution_file = empty_file('tmp-empty.py')
+    points, max_points, missing_files = run_all_test_suites(solution_file, args.assets)
     if missing_files == 0:
         show_moodle_grade(points, max_points)
