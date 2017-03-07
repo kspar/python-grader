@@ -64,7 +64,7 @@ def run_test_suite(tester_file, solution_file=None, asset_files=[], show_filenam
         except Exception as e:
             # TODO: what about max points here?
             print("<|--")
-            print("-Viga faili {} testimisel".format(solution_file))
+            print("-Viga esitatud faili testimisel")
             traceback.print_exc()
             print("--|>")
     else:
