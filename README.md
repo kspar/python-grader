@@ -2,7 +2,7 @@ Python Grader
 =============
 
 ---------------
-This project was made as a part of Karl-Aksel Puulmann's Bachelor's thesis. The following two links serve as a better introduction to the project than this readme does.
+This project is a fork of Karl-Aksel Puulmann's Bachelor's thesis. The following two links serve as a better introduction to the original project than this readme does.
 
 * [Link to poster introducing project](http://macobo.github.io/python-grader/poster.pdf)
 * [Link to thesis](http://macobo.github.io/python-grader/thesis.pdf)
