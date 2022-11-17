@@ -1,6 +1,7 @@
 import argparse
 import os.path
 import traceback
+import sys
 
 import grader
 
@@ -57,8 +58,8 @@ def run_test_suite(tester_file, solution_file=None, asset_files=[], show_filenam
                 print(format_result(r, solution_file if show_filename else None))
 
         except Exception as e:
-            print("Viga esitatud faili testimisel")
-            traceback.print_exc()
+            print("Viga esitatud faili testimisel\n")
+            traceback.print_exc(file=sys.stdout)
     else:
         file_missing = True
         print("Ei leidnud faili '" + solution_file + "'")
