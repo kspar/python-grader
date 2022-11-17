@@ -79,7 +79,7 @@ def create_file(filename, contents="", encoding="utf-8"):
                     # ...
     """
     import collections
-    if isinstance(contents, collections.Iterable) and not isinstance(contents, str):
+    if isinstance(contents, collections.abc.Iterable) and not isinstance(contents, str):
         contents = "\n".join(map(str, contents))
 
     def _inner(info):
