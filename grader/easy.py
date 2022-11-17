@@ -29,6 +29,9 @@ def format_result(r, filename=None):
             error_message += "Täielik veateade:\n"
             error_message += r["traceback"] if r["traceback"] else r["stderr"]
             error_message += '\n\n'
+    
+    if error_message == '' or error_message[-1] != '\n':
+        error_message += '\n'
     return "{0}{1}".format(title, error_message)
 
 
