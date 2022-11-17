@@ -46,8 +46,8 @@ def run_test_suite(tester_file, solution_file=None, asset_files=[], show_filenam
         try:
             grader_result = grader.test_module(tester_file, solution_file, other_files=asset_files)
 
-            if not grader_result["results"]:
-                print("Probleem testmimisel:", grader_result)
+            if "results" not in grader_result:
+                raise Exception(f'Tulemust ei leitud: {grader_result}')
 
             for r in grader_result["results"]:
                 max_points += grader_result.get("grade", 1.0)
