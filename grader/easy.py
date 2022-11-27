@@ -38,7 +38,7 @@ def format_result(r, filename=None):
 def run_test_suite(tester_file, solution_file=None, asset_files=[], show_filename=False):
     if solution_file is None:
         if tester_file == "tester.py":
-            solution_file = "submission"
+            solution_file = "submission.py"
         else:
             solution_file = tester_file.replace(TESTER_MARKER, "")
 
