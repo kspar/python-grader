@@ -23,7 +23,7 @@ def is_function(value):
         return False
 
 def quote_text_block(text):
-    return "\n>" + text.replace("\n", "\n>")
+    return "\n   " + text.replace("\n", "\n   ")
 
 ## Function descriptions
 def beautifyDescription(description):
